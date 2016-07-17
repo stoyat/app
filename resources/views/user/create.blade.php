@@ -1,4 +1,4 @@
-@extends('index')
+@extends('layouts.app')
 
 @section('pagetitle')
     Create account
@@ -24,6 +24,23 @@
         {!! Form::label('email', 'Email') !!}
         {!! Form::text('email', Input::old('email'), ['class' => 'form-control']) !!}
     </div>
+
+    <div class="form-group">
+        {!! Form::label('password', 'Password') !!}
+        {!! Form::password('password', ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('password_confirmation', 'Confirm Password') !!}
+        {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+    </div>
+    
+    @can('addAdmin', Auth::user())
+    <div class="form-group">
+        {!! Form::checkbox('is_admin', Input::old('is_admin')) !!}
+        {!! Form::label('is_admin', 'Is admin') !!}
+    </div>
+    @endcan
 
     <div class="form-group">
         {!! Form::submit('Create', ['class' => 'btn btn-primary']) !!}

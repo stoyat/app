@@ -1,4 +1,4 @@
-@extends('index')
+@extends('layouts.app')
 
 @section('pagetitle')
     Add book
@@ -8,7 +8,7 @@
 
     {!! HTML::ul($errors->all()) !!}
 
-    {!! Form::open(['url'=> 'register']) !!}
+    {!! Form::open(['url'=> 'bookregister']) !!}
 
     <div class="form-group">
         {!! Form::label('book_id', 'Book') !!}

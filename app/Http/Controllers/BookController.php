@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->authorize('manageUsers');
+    }
+
     /**
      * Display a listing of the resource.
      *

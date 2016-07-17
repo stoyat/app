@@ -1,4 +1,4 @@
-@extends('index')
+@extends('layouts.app')
 
 @section('pagetitle')
     Book list

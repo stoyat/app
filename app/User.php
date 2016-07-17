@@ -2,12 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    protected $hidden = ['updated_at', 'created_at'];
-    //
+    protected $fillable = ['firstname', 'lastname', 'email', 'password',];
+
+    protected $hidden = ['password', 'remember_token',];
+
     public function books()
     {
         return $this->belongsToMany('App\Book')->withPivot(['id', 'created_at']);

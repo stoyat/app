@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('manageUsers');
         $users = User::paginate(10);
         return view('user/index', ['users' => $users]);
         //
@@ -30,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('manageUsers');
         return view('user/create');
     }
 
@@ -42,10 +47,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('manageUsers');
         $validate_r = [
             'firstname' => 'required|alpha|max:255',
             'lastname' => 'required|alpha|max:255',
-            'email' => 'required|email|unique:users'
+            'email' => 'required|email|unique:users',
         ];
 
         $validator = Validator::make($request->all(), $validate_r);
@@ -62,7 +68,7 @@ class UserController extends Controller
             $user->save();
 
             Session::flash('message', 'Successfully created user');
-            return Redirect::to('users');
+            return Redirect::back();
         }
         //
     }
@@ -75,6 +81,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('manageUsers');
         $user = User::find($id);
         $books = $user->books()->paginate(10);
         return view('user/show', [ 'user' => $user, 'books' => $books]);
@@ -90,6 +97,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        $this->authorize('edit', $user);
         return view('user/edit', [ 'user' => $user]);
         //
     }
@@ -103,10 +111,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = User::find($id);
+        $this->authorize('edit', $user);
+
         $validate_r = [
             'firstname' => 'required|alpha|max:255',
             'lastname' => 'required|alpha|max:255',
-            'email' => 'required|email|unique:users,email,'.$id
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'min:6|confirmed'
         ];
 
         $validator = Validator::make($request->all(), $validate_r);
@@ -116,14 +128,17 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $user = User::find($id);
             $user->firstname = $request->firstname;
             $user->lastname = $request->lastname;
             $user->email = $request->email;
+
+            if($request->password != '')
+                $user->password = bcrypt($request->password);
+
             $user->save();
 
             Session::flash('message', 'Successfully updated');
-            return Redirect::to('users');
+            return Redirect::back();
         }
         //
     }
@@ -136,6 +151,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('manageUsers');
         User::find($id)->delete();
         Session::flash('message', 'Successfully deleted user with Id: '.$id);
         return Redirect::back();

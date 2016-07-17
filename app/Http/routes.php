@@ -19,4 +19,8 @@ Route::resource('users', 'UserController');
 
 Route::resource('books', 'BookController');
 
-Route::resource('register', 'RegisterController');
+Route::resource('bookregister', 'RegisterController');
+
+Route::resource('home', 'HomeController');
+
+Route::auth();

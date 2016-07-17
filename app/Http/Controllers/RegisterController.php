@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->authorize('manageRegister');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +69,7 @@ class RegisterController extends Controller
             $user->books()->attach($book->id);
 
             Session::flash('message', 'Successfully assigned book id '.$book->id.' for user id '.$user->id);
-            return Redirect::to('register');
+            return Redirect::to('home');
         }
         //
     }

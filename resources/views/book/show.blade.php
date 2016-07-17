@@ -1,4 +1,4 @@
-@extends('index')
+@extends('layouts.app')
 
 @section('pagetitle')
     Details, {{ $book->title }}
@@ -54,7 +54,7 @@
                 <td>{{ $user->pivot->created_at }}</td>
                 <td>
 
-                    {!! Form::open(['url' => 'register/'.$user->pivot->id, 'class' => 'pull-right']) !!}
+                    {!! Form::open(['url' => 'bookregister/'.$user->pivot->id, 'class' => 'pull-right']) !!}
                     {!! Form::hidden('_method', 'DELETE') !!}
                     {!! Form::submit('Return book', ['class' => 'btn btn-warning']) !!}
                     {!! Form::close() !!}
