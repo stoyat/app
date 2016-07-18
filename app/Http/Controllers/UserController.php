@@ -52,6 +52,7 @@ class UserController extends Controller
             'firstname' => 'required|alpha|max:255',
             'lastname' => 'required|alpha|max:255',
             'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
         ];
 
         $validator = Validator::make($request->all(), $validate_r);
@@ -65,6 +66,7 @@ class UserController extends Controller
             $user->firstname = $request->firstname;
             $user->lastname = $request->lastname;
             $user->email = $request->email;
+            $user->password = bcrypt($request->password);
             $user->save();
 
             Session::flash('message', 'Successfully created user');

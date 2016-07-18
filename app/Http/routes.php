@@ -24,3 +24,22 @@ Route::resource('bookregister', 'RegisterController');
 Route::resource('home', 'HomeController');
 
 Route::auth();
+
+Route::get('login/{provider}', function ($provider){
+    return Socialite::driver($provider)->redirect();
+});
+
+Route::get('auth/{provider}/callback', function ($provider){
+    $user = Socialite::driver($provider)->user();
+
+    if(!$LibraryUser = App\User::where('email', $user->email )->first())
+        $LibraryUser = App\User::create([
+            'firstname' => explode(' ', $user->name)[0],
+            'lastname' => explode(' ', $user->name)[1],
+            'email' => $user->email,
+        ]);
+
+    Auth::login($LibraryUser, true);
+
+    return Redirect::to('home');
+});

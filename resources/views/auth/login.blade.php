@@ -57,6 +57,15 @@
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
                             </div>
                         </div>
+
+                        <div class="block center-block text-center">
+                            <a class="btn btn-success" href="/login/google">
+                                <i class="fa fa-btn fa-sign-in"></i> with Google+
+                            </a>
+                            <a class="btn btn-success" href="/login/github">
+                                <i class="fa fa-btn fa-sign-in"></i> with Github
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
