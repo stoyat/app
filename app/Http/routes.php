@@ -43,3 +43,9 @@ Route::get('auth/{provider}/callback', function ($provider){
 
     return Redirect::to('home');
 });
+
+Route::group(['prefix' => 'api'], function (){
+    Route::resource('books', 'BookApiController', ['only' => ['create', 'show', 'index', 'destroy']]);
+    Route::resource('userbook', 'UserBookApiController', ['only' => ['show', 'store', 'destroy']]);
+    Route::resource('user', 'UserApiController', ['only' => ['show']]);
+});
