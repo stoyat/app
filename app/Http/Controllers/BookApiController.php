@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class BookApiController extends Controller
 {
@@ -27,10 +29,10 @@ class BookApiController extends Controller
     public function store(Request $request)
     {
         $validate_r = [
-            'title' => 'required|alpha|max:255',
-            'author' => 'required|alpha|max:255',
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
             'year' => 'required|numeric|min:0|max:'.date('Y'),
-            'genre' => 'required|alpha|max:255'
+            'genre' => 'required|string|max:255'
         ];
 
         $validator = Validator::make($request->all(), $validate_r);
@@ -64,6 +66,31 @@ class BookApiController extends Controller
         }
         return response()->json($book, 200);
         //
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validate_r = [
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'year' => 'required|numeric|min:0|max:'.date('Y'),
+            'genre' => 'required|string|max:255'
+        ];
+
+        $validator = Validator::make($request->all(), $validate_r);
+
+        if($validator->fails()){
+            return response()->json(["some" => $validator->errors()], 422);
+        } else {
+            $book = Book::find($id);
+            $book->title = $request->title;
+            $book->author = $request->author;
+            $book->year = $request->year;
+            $book->genre = $request->genre;
+            $book->save();
+
+            return response()->json($book, 200);
+        }
     }
 
     /**

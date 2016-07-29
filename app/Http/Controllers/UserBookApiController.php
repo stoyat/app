@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Book;
 use App\BookUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserBookApiController extends Controller
 {
+    public function index()
+    {
+        $register = BookUser::With('user', 'book')->get();
+        return response()->json($register, 200);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -30,7 +38,7 @@ class UserBookApiController extends Controller
             $book = Book::find($request->book_id);
             $user = User::find($request->user_id);
             $user->books()->attach($book->id);
-            return response()->json([], 201);
+            return response()->json(["book" => $book, "user_id" => $user->id], 201);
         }
         //
     }

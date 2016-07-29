@@ -11,9 +11,14 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/', function (){
+    return view('singlepage/index');
+});
+
 
 Route::resource('users', 'UserController');
 
@@ -36,7 +41,7 @@ Route::get('auth/{provider}/callback', function ($provider){
         $LibraryUser = App\User::create([
             'firstname' => explode(' ', $user->name)[0],
             'lastname' => explode(' ', $user->name)[1],
-            'email' => $user->email,
+                       'email' => $user->email,
         ]);
 
     Auth::login($LibraryUser, true);
@@ -45,7 +50,8 @@ Route::get('auth/{provider}/callback', function ($provider){
 });
 
 Route::group(['prefix' => 'api'], function (){
-    Route::resource('books', 'BookApiController', ['only' => ['create', 'show', 'index', 'destroy']]);
-    Route::resource('userbook', 'UserBookApiController', ['only' => ['show', 'store', 'destroy']]);
-    Route::resource('user', 'UserApiController', ['only' => ['show']]);
+    Route::resource('books', 'BookApiController', ['only' => ['store', 'show', 'index', 'destroy', 'update']]);
+    Route::resource('userbook', 'UserBookApiController', ['only' => ['index', 'show', 'store', 'destroy']]);
+    Route::resource('users', 'UserApiController', ['only' => ['show', 'index']]);
 });
+
