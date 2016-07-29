@@ -20,7 +20,7 @@ App.addRegions({
 /** --- --- --- Models --- --- --- **/
 {
     BookModel = Backbone.Model.extend({
-        urlRoot: 'http://localhost:8000/api/books',
+        urlRoot: '/api/books',
         defaults: {
             title: "",
             author: "",
@@ -41,18 +41,18 @@ App.addRegions({
         }
     });
     BookList = Backbone.Collection.extend({
-        url: 'http://localhost:8000/api/books',
+        url: '/api/books',
         model: BookModel
     });
     RecordModel = Backbone.Model.extend({
-        urlRoot: 'http://localhost:8000/api/userbook',
+        urlRoot: '/api/userbook',
     });
     RegisterList = Backbone.Collection.extend({
-        url: 'http://localhost:8000/api/userbook',
+        url: '/api/userbook',
         model: RecordModel
     });
     UserModel = Backbone.Model.extend({
-        urlRoot: 'http://localhost:8000/api/users',
+        urlRoot: '/api/users',
         validate: function (attrs, options) {
             if(!/([A-z]{6,})/.test(attrs.firstname))
                 return "Incorrect firstname";
@@ -67,7 +67,7 @@ App.addRegions({
         }
     });
     UserList = Backbone.Collection.extend({
-        url: 'http://localhost:8000/api/users',
+        url: '/api/users',
         model: UserModel
     });
 }
