@@ -29,9 +29,7 @@
             width: 100%;
             height: 100%;
             z-index: 999;
-            background-image: url("loading.gif");
-            background-color: rgba(179, 179, 179, 0.5);
-            background-position: center;
+            background: rgba(179, 179, 179, 0.5) url("loading.gif") no-repeat center;
         }
     </style>
 </head>

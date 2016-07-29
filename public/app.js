@@ -157,10 +157,11 @@ App.addRegions({
                 alert(model.validationError);
                 return;
             }
-            model.save(data);
-            Backbone.history.navigate('/books', {
-                trigger: true
-            });
+            model.save(data, {success: function () {
+                Backbone.history.navigate('/books', {
+                    trigger: true
+                });
+            }});
         }
     });
 
@@ -203,10 +204,11 @@ App.addRegions({
                 return acc;
             }, {});
             var record = new RecordModel();
-            record.save(data);
-            Backbone.history.navigate('/users/'+data.user_id, {
-                trigger: true
-            });
+            record.save(data, { success: function () {
+                Backbone.history.navigate('/users/'+data.user_id, {
+                    trigger: true
+                });
+            }});
         },
         template: "#register_attach-template",
         tagName: "form",
@@ -271,9 +273,12 @@ new Marionette.AppRouter({
         book_delete: function (id) {
             Loading.show();
             var book = new BookModel({id: id});
-            book.destroy();
-            Backbone.history.navigate('/books', {
-                trigger: true
+            book.destroy({
+                success: function () {
+                    Backbone.history.navigate('/books', {
+                        trigger: true
+                    });
+                }
             });
         },
         book_add: function () {
