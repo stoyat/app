@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
 
-    var vnd = ['jquery', 'backbone', 'backbone.marionette', 'underscore', 'Handlebars'];
+    var vnd = ['jquery', 'backbone', 'backbone.marionette', 'underscore'];
 
     grunt.initConfig({
         browserify: {
