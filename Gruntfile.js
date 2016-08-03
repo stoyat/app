@@ -52,7 +52,7 @@ module.exports = function (grunt) {
                 dest: 'public/css/style.css'
             },
             bower: {
-                src: ['bower_components/bootstrap/dist/css/bootstrap.css'],
+                src: ['bower_components/bootstrap/dist/css/bootstrap.min.css'],
                 dest: 'public/css/vendor.css'
             }
         },
