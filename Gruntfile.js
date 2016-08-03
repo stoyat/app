@@ -49,7 +49,11 @@ module.exports = function (grunt) {
         concat: {
             css: {
                 src: ['resources/assets/**/*.css'],
-                dest: 'pubic/css/style.css'
+                dest: 'public/css/style.css'
+            },
+            bower: {
+                src: ['bower_components/bootstrap/dist/css/bootstrap.css'],
+                dest: 'public/css/vendor.css'
             }
         },
         watch: {
