@@ -45,7 +45,7 @@ App.addRegions({
         model: BookModel
     });
     RecordModel = Backbone.Model.extend({
-        urlRoot: '/api/userbook',
+        urlRoot: '/api/userbook'
     });
     RegisterList = Backbone.Collection.extend({
         url: '/api/userbook',
@@ -144,7 +144,7 @@ App.addRegions({
         template: "#book_edit-template",
         tagName: "form",
         events: {
-            'submit': 'submitForm',
+            'submit': 'submitForm'
         },
         submitForm: function (e) {
             e.preventDefault();
@@ -372,7 +372,7 @@ new Marionette.AppRouter({
         "bookregister/create": "register_create",
         "bookregister/:id/delete": "register_delete",
         "bookregister": "register"
-    },
+    }
 });
 
 App.addInitializer(function(options){
